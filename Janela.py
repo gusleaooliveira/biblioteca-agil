@@ -43,12 +43,16 @@ class Janela:
                 if coluna == 1:
                     self.cb3.addItem(iten)
         
+        self.enNome = QLineEdit()
+
         self.btn = QPushButton("Retirar")
         self.btn.clicked.connect(self.statusLivro)
 
         self.grid.addWidget(QLabel("Livros:"), 0, 0)
         self.grid.addWidget(self.cb3, 0, 1)
-        self.grid.addWidget(self.btn, 1, 0, 2, 2)
+        self.grid.addWidget(QLabel("Nome do usuário:"), 1, 0)
+        self.grid.addWidget(self.enNome, 1, 1)
+        self.grid.addWidget(self.btn, 2, 0, 2, 2)
 
     def devolverLivro(self):
         self.limparItens()
@@ -67,6 +71,7 @@ class Janela:
                 if coluna == 1:
                     self.cb3.addItem(iten)
         
+
         self.btn = QPushButton("Devolver")
         self.btn.clicked.connect(self.statusLivro)
 
@@ -75,7 +80,10 @@ class Janela:
         self.grid.addWidget(self.btn, 1, 0, 2, 2)
 
     def statusLivro(self):
-        val=self.classLivro.statusLivro(self.idItem, self.status)
+        if self.enNome != None:
+            val=self.classLivro.statusLivro(self.idItem, self.status, self.enNome.text())
+        else:
+            val=self.classLivro.statusLivro(self.idItem, self.status)
         if val == True:
             self.statusBar.showMessage(f"{self.status}!!", 2000)
         else:

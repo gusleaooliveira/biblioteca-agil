@@ -9,7 +9,8 @@ class Livro:
                 nome  TEXT,
                 autor TEXT,
                 ano TEXT,
-                status TEXT
+                status TEXT, 
+                usuario TEXT
             )
         """)
 
@@ -40,17 +41,17 @@ class Livro:
         lista=(status,)
         return self.banco.selecionarOpcao(sql, lista)
 
-    def alterar(self, id, nome, autor, ano, status):
+    def alterar(self, id, nome, autor, ano, status, usuario=""):
         if ano.isdecimal() == True:
-            sql="UPDATE livro SET nome = ?, autor = ?, ano = ?, status = ? WHERE id = ?"
-            lista=(nome, autor, int(ano), status, id)
+            sql="UPDATE livro SET nome = ?, autor = ?, ano = ?, usuario = ? status = ? WHERE id = ?"
+            lista=(nome, autor, int(ano), status, usuario, id)
             return self.banco.alterar(sql, lista)
         else:
             return False
 
-    def statusLivro(self, id, status="Indisponível"):
-        sql="UPDATE livro SET status = ? WHERE id = ?"
-        lista=(status, id)
+    def statusLivro(self, id, status="Indisponível", usuario=""):
+        sql="UPDATE livro SET status = ?, usuario = ? WHERE id = ?"
+        lista=(status, usuario, id)
         return self.banco.alterar(sql, lista)
 
     def apagar(self, id):
